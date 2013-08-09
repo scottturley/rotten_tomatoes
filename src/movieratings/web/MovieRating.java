@@ -6,6 +6,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Iterator;
+
+import movieratings.web.Movies.Movie;
 
 import com.google.gson.Gson;
 
@@ -92,7 +95,7 @@ public class MovieRating
 		String movieString = movie.replaceAll(" ", "+").toLowerCase();
 		
 	//	String movie = getJson(links.getRottenTomatoLinks().getMovies() + "?apikey=" + apiKey + "&q=despicable+me+2&page_limit=1");
-	//	String movieJson = getJson(links.getRottenTomatoLinks().getMovies() + "?apikey=" + apiKey + "&q=" + movieString + "&page_limit=1");
+	//	String movieJson = getJson(links.getRottenTomatoLinks().getMovies() + "?apikey=" + apiKey + "&q=" + movieString + "&page_limit=" + count);
 		String movieJson = getJson(links.getRottenTomatoLinks().getMovies() + "?apikey=" + apiKey + "&q=" + movieString);
 
 
@@ -111,17 +114,20 @@ public class MovieRating
 
 		MovieRating movies = new MovieRating();
 		
-		Movies movieInfo = movies.process("Hannah");
+		Movies movieInfo = movies.process("Schindler's List");
+		
+		for (Movie thisMovie : movieInfo.getMovies())
+		{
+				System.out.println("<img src=" + thisMovie.getPosters().detailed + ">");
 				
-		if (!movieInfo.getMovies().isEmpty())
-		{
-			System.out.println("Critics Rating = " + movieInfo.getMovies().get(0).getRatings().critics_rating);
-			System.out.println("Critics Rating = " + movieInfo.getMovies().get(0).getRatings().critics_score);
-			
-		}
-		else
-		{
-			System.out.println("Couldn't find this movie");
+				if (thisMovie.getRatings() != null)
+				{
+					System.out.println("<H2>Critics Rating = " + thisMovie.getRatings().getCritics_rating() + "</H2>");
+					System.out.println("<H2>Critics Score = " + thisMovie.getRatings().getCritics_score() + "</H2>");
+				}
+				
+				System.out.println("<p>" + thisMovie.getCritics_consensus() + "</p>");
+				System.out.println("<hr>");
 		}
 	}
 }

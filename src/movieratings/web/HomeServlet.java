@@ -2,6 +2,7 @@ package movieratings.web;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Iterator;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -10,6 +11,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import movieratings.web.Movies.Movie;
 
 import org.apache.log4j.Logger;
 
@@ -53,19 +56,21 @@ public class HomeServlet extends HttpServlet
 		
 
 		MovieRating movies = new MovieRating();		
-//		Movies movieInfo = movies.process("Despicable Me 2");
-		Movies movieInfo = movies.process(movie);
-		
-		if (!movieInfo.getMovies().isEmpty())
+		Movies movieInfo = movies.process(movie);					
+	
+		for (Movie thisMovie : movieInfo.getMovies())
 		{
-			writer.println("<img src=" + movieInfo.getMovies().get(0).getPosters().detailed + ">");
-			writer.println("<H2>Critics Rating = " + movieInfo.getMovies().get(0).getRatings().critics_rating + "</H2>");
-			writer.println("<H2>Critics Rating = " + movieInfo.getMovies().get(0).getRatings().critics_score + "</H2>");
-			writer.println("<p>" + movieInfo.getMovies().get(0).getCritics_consensus() + "</p>");
-		}
-		else
-		{
-			writer.println("Couldn't find this movie");
+				writer.println("<img src=" + thisMovie.getPosters().detailed + ">");
+				
+				if (thisMovie.getRatings() != null)
+				{
+					writer.println("<H2>Critics Rating = " + thisMovie.getRatings().getCritics_rating() + "</H2>");
+					writer.println("<H2>Critics Rating = " + thisMovie.getRatings().getCritics_score() + "</H2>");
+					writer.println("<H2>MPAA Rating = " + thisMovie.getMpaa_rating() + "</H2>");
+				}
+				
+				writer.println("<p>" + thisMovie.getCritics_consensus() + "</p>");
+				writer.println("<hr>");
 		}
 	}
 }
