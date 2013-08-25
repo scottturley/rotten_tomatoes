@@ -2,7 +2,6 @@ package movieratings.web;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Iterator;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -12,20 +11,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import movieratings.web.Movies.Movie;
-
-import org.apache.log4j.Logger;
-
 public class HomeServlet extends HttpServlet
 {	
 	private RequestDispatcher homeJsp;
-	private Logger logger = Logger.getLogger(this.getClass());
+	private RequestDispatcher movieJsp;
 	
 	@Override
 	public void init(ServletConfig config) throws ServletException
 	{
 		ServletContext context = config.getServletContext();
 		homeJsp = context.getRequestDispatcher("/WEB-INF/jsp/home.jsp");
+		movieJsp = context.getRequestDispatcher("/WEB-INF/jsp/movies.jsp");
 	}
 	
 //	public void init(ServletConfig config) throws ServletException
@@ -50,27 +46,23 @@ public class HomeServlet extends HttpServlet
 		String movie = req.getParameter("movie");	
 		
 		System.out.println("Movie = " + movie);
-
-		PrintWriter writer = resp.getWriter();		
 		System.out.println("Starting Test");
-		
 
 		MovieRating movies = new MovieRating();		
-		Movies movieInfo = movies.process(movie);					
-	
-		for (Movie thisMovie : movieInfo.getMovies())
+		Movies movieInfo = movies.process(movie);
+			
+		if (movieInfo.getMovies().isEmpty())
 		{
-				writer.println("<img src=" + thisMovie.getPosters().detailed + ">");
-				
-				if (thisMovie.getRatings() != null)
-				{
-					writer.println("<H2>Critics Rating = " + thisMovie.getRatings().getCritics_rating() + "</H2>");
-					writer.println("<H2>Critics Rating = " + thisMovie.getRatings().getCritics_score() + "</H2>");
-					writer.println("<H2>MPAA Rating = " + thisMovie.getMpaa_rating() + "</H2>");
-				}
-				
-				writer.println("<p>" + thisMovie.getCritics_consensus() + "</p>");
-				writer.println("<hr>");
+			PrintWriter writer = resp.getWriter();	
+			
+			writer.write("<H2>Sorry Movie Not Found</H2>");
+			
+			writer.println("<H2>Sorry Movie Not Found</H2>");
+		}
+		else
+		{
+			req.setAttribute("movies", movieInfo.getMovies());
+			movieJsp.forward(req, resp);
 		}
 	}
 }

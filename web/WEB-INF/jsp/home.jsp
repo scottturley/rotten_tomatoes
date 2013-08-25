@@ -11,7 +11,7 @@
 
 <form method="post" action="">
    <div>
-      Move: <input type="text" name="movie" size="36" />
+      Movie: <input type="text" name="movie" size="36" />
 
    </div>
    <div>

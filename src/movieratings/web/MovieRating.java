@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Iterator;
 
 import movieratings.web.Movies.Movie;
 
@@ -114,7 +113,7 @@ public class MovieRating
 
 		MovieRating movies = new MovieRating();
 		
-		Movies movieInfo = movies.process("Schindler's List");
+		Movies movieInfo = movies.process("Hanna");
 		
 		for (Movie thisMovie : movieInfo.getMovies())
 		{

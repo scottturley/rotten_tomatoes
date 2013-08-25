@@ -161,6 +161,22 @@ public class Movies
 
 		public static class Posters
 		{
+			public String getThumbnail()
+			{
+				return thumbnail;
+			}
+			public String getProfile()
+			{
+				return profile;
+			}
+			public String getDetailed()
+			{
+				return detailed;
+			}
+			public String getOriginal()
+			{
+				return original;
+			}
 			String thumbnail;
 			String profile;
 			String detailed;
