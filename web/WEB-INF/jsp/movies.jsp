@@ -8,10 +8,8 @@
     <meta name="author" content="Scott Turley">
 
     <link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
-    <!-- 
-    <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
-     -->
-       <style type="text/css">
+
+    <style type="text/css">
     div.new_html_code {
       width:500px;
       height:500px;
@@ -31,61 +29,41 @@
 </head>
 
 <body>
+<%@ include file="top.inc" %>
 
-<!--  
-
-		
-		for (Movie thisMovie : movieInfo.getMovies())
-		{
-				writer.println("<img src=" + thisMovie.getPosters().detailed + ">");
-				
-				if (thisMovie.getRatings() != null)
-				{
-					writer.println("<H2>Critics Rating = " + thisMovie.getRatings().getCritics_rating() + "</H2>");
-					writer.println("<H2>Critics Rating = " + thisMovie.getRatings().getCritics_score() + "</H2>");
-					writer.println("<H2>MPAA Rating = " + thisMovie.getMpaa_rating() + "</H2>");
-				}
-				
-				writer.println("<p>" + thisMovie.getCritics_consensus() + "</p>");
-				writer.println("<hr>");
-		}
-	}
--->
 <%@ page import="java.util.Iterator" %>
 <%@ page import="movieratings.web.Movies.Movie" %>
 <jsp:useBean id="movies" scope="request" type="java.util.List" />
 
+<div style="text-align: center">
 <div class="container-fluid">
 	<div class="row-fluid">
 	<div id="myCarousel" class="carousel span8 offset2 slide">
   		<div class="carousel-inner">
   		<div class="active item">   		
-  		<!--  	<div class="thumbnails">-->
-
-
  	<% 
 	Iterator it = movies.iterator();
 	Integer  i  = 0;
  	
 	while (it.hasNext())
 	{
-		if ((i % 1 == 0) && (i != 0))
+		if (i != 0)
 		{ %>
 		<div class="item"> 
 	<%	}
-         Movie thisMovie = (Movie) it.next(); %>
-         		<div class="new_html_code">  
-	 				<div class="caption"><h5><%=thisMovie.getTitle() %></h5></div>
-	 				<div class="caption"><h5>Rated: <%=thisMovie.getMpaa_rating() %></h5></div>
-	 				<div class="caption"><h5><%=thisMovie.getCritics_consensus() %></h5></div>
-		 			<div class="caption"><h5>Critics Rating: <%=thisMovie.getRatings().getCritics_rating() %></h5></div>
-     				<div class="caption"><h5>Critics Score: <%= thisMovie.getRatings().getCritics_score() %> </h5></div>
- 					<img src="<%=thisMovie.getPosters().getDetailed()%>" alt="Image" width="200" height="250" />	
-				</div>
+         Movie thisMovie = (Movie) it.next(); 
+    %>
+
+	 		<div class="caption"><h5><%=thisMovie.getTitle() %></h5></div>
+	 		<div class="caption"><h5>Rated: <%=thisMovie.getMpaa_rating() %></h5></div>
+	 		<div class="caption"><h5><%=thisMovie.getCritics_consensus() %></h5></div>
+		 	<div class="caption"><h5>Critics Rating: <%=thisMovie.getRatings().getCritics_rating() %></h5></div>
+     		<div class="caption"><h5>Critics Score: <%= thisMovie.getRatings().getCritics_score() %> </h5></div>
+ 			<img src="<%=thisMovie.getPosters().getOriginal()  %>" alt="Image" />	
 	<%  
 		i++;
 	
-		if ((i % 1 == 0) && (i != 0))
+		if (i != 0)
 		{ 
 	%>
 		</div>	
@@ -93,14 +71,26 @@
 		}	
 	}
 	%>
-		<!--  </div>-->
-		</div>	    
+		</div>
+		<ol class="carousel-indicators">
+			<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+		<%
+		for (Integer j = 1; j < i; j++)
+		{
+		%> 	
+   			<li data-target="#myCarousel" data-slide-to="<%=j%>"></li>
+  	 	<%
+   		}
+   		%>   
+   		</ol>
+	    
     	</div><!--/carousel-inner-->
       
     <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
     <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
 	</div><!--/myCarousel-->
 	</div>
+</div>
 </div>
 <!--  </div>--><!-- container -->
 

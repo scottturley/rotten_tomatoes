@@ -2,23 +2,15 @@
  
 <head> 
   <title>What's the Rotten Tomatoes Rating?</title> 
+  
+    <link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
 </head>
 
 <body> 
+<%@ include file="top.inc" %>
 
-
-<h1>What's the Rotten Tomatoes Rating?</h1>
-
-<form method="post" action="">
-   <div>
-      Movie: <input type="text" name="movie" size="36" />
-
-   </div>
-   <div>
-      <input type="submit" value="Find" />
-   </div>
-
-</form>
-
+    <script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+    <script src="http://code.jquery.com/jquery.js"></script>
+    
 </body>
 </html>
